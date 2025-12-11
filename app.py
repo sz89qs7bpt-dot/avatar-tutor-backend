@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 load_dotenv()
-
 app = Flask(__name__)
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+@app.route("/")
+def index():
+    return "Avatar tutor backend is running. Try POST /api/chat."
 
 def call_tutor_llm(user_message: str, user_language: str = "en"):
     system_prompt = f"""
