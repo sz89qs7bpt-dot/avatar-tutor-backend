@@ -35,7 +35,29 @@ Respond ALWAYS in this JSON shape:
      "data": "..."
   }}
 }}
+
+Formatting rules for visual_payload.data:
+- If visual_type == "sentence_pair":
+  - visual_payload.data MUST be an array of objects like:
+    [
+      {{"source": "French sentence", "target": "Translation in the learner's language"}},
+      ...
+    ]
+  - Do NOT return a single long string here.
+- If visual_type == "table":
+  - visual_payload.data MUST be an array of row objects, e.g.:
+    [
+      {{"Column 1": "Header", "Column 2": "Header"}},
+      {{"Column 1": "Value A", "Column 2": "Value B"}},
+      ...
+    ]
+- If visual_type == "none":
+  - visual_payload.data should be an empty array [] or an empty object {{}}.
+
+The learner's native language is: {user_language}.
+Keep "reply" friendly and concise.
 """
+
     completion = client.chat.completions.create(
         model="gpt-4.1-mini",
         response_format={"type": "json_object"},
