@@ -8,6 +8,14 @@ load_dotenv()
 app = Flask(__name__)
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+@app.after_request
+def add_cors_headers(response):
+    # Allow your front-end to call this API from another domain
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    response.headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS"
+    return response
+
 @app.route("/")
 def index():
     return "Avatar tutor backend is running. Try POST /api/chat."
