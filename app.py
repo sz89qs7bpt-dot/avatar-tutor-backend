@@ -154,3 +154,5 @@ def video_status():
         "raw": data
     })
     
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=10000)
